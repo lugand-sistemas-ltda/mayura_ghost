@@ -1,1 +1,5 @@
+# PROJECT BUILD FILES
 /target
+
+# VSCODE IDE CONFIG FILE
+.vscode

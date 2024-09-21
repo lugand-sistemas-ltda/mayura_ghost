@@ -3,55 +3,55 @@ use gtk::{Image, Window, WindowType};
 use gdk::Display;
 
 fn main() {
-    // Inicializa GTK
+    // Init GTK
     gtk::init().expect("Failed to initialize GTK.");
 
-    // Cria a janela
+    // Create window
     let window = Window::new(WindowType::Popup);
     window.set_decorated(false); // Remove os botões e bordas
     window.set_app_paintable(true); // Permite que a janela seja pintada manualmente
     window.set_default_size(250, 280);
 
-    // Caminho do GIF armazenado nos recursos
+    // Resources root
     let gif_path = "resources/gifs/mayura.gif";
-    // Caminha para imagens armazenas nos recursos
     let mayura_idle_img = "resources/imgs/mayura-idle.png";
     let mayura_angry_img = "resources/imgs/mayura-angry.png";
     let mayura_wait_img = "resources/imgs/mayura-wait.png";
 
-    // Carrega o GIF e cria um widget de imagem
+    // Load resource and create widget (GIF)
     let image = Image::from_file(gif_path);
     
-    // Define um tamanho padrão para a imagem
-    image.set_pixel_size(250); // Define a largura e altura máxima para a imagem
+    // Define standard image size
+    image.set_pixel_size(250);
 
-    // Adiciona a imagem à janela
+    // Add widget image to the window
     window.add(&image);
 
-    // Obtém o monitor padrão para pegar a resolução da tela
+    // Get standard monitor to get window resolution
     if let Some(display) = Display::default() {
         if let Some(monitor) = display.primary_monitor() {
             let monitor_geo = monitor.geometry();
             let screen_height = monitor_geo.height();
             let screen_width = monitor_geo.width();
 
-            // Define a posição da janela no canto inferior esquerdo
+            // Define window position
             window.move_(screen_width - 250, screen_height - 280);
         }
     }
 
-    // Mostra todos os widgets da janela
+    // Show all window widgets
     window.show_all();
 
-    // Conecta o sinal de fechar a aplicação
+    // Connect signal to close the application
     window.connect_delete_event(|_, _| {
         gtk::main_quit();
-        false.into() // Retorna false para permitir que a janela seja fechada
+        // Return 'false' to allow the window to be closed
+        false.into()
     });
 
-    // Exibir a janela
+    // Show window
     window.show();
 
-    // Mantém a janela visível
+    // Keep the window visible
     gtk::main();
 }
